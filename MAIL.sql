@@ -1,3 +1,13 @@
+/* Avaliação P1 */
+/* Eduardo Soares de Sousa*/
+/* Vinicius Fazolaro Silva */
+
+/* Descrição */
+/* O sistema de correio foi projeto no objetivo de que o remetente possa registrar e enviar pacotes, enquanto o destinatário possa
+visualizar a entrega. A logística é formada principalmente pelos entregadore que efetuaram as entregas, tendo a responsabilidade 
+do gerente que podem monitorar os processos da logística e ainda rastreamento das entregas, isso juntamente com o controle de usuarios
+garante que cada um dos indivíduos tenham seus papéis bem definidos, promovendo assim a efeciência e a integridade do sistema. */
+
 DROP TABLE pessoa CASCADE CONSTRAINTS;
 DROP TABLE remetente CASCADE CONSTRAINTS;
 DROP TABLE gerente CASCADE CONSTRAINTS;
@@ -114,11 +124,11 @@ INSERT INTO logistica (codigo, centroDistribuicao, codigoGerente) VALUES (3, 'Ce
 INSERT INTO logistica (codigo, centroDistribuicao, codigoGerente) VALUES (4, 'Centro Leste', 4);
 INSERT INTO logistica (codigo, centroDistribuicao, codigoGerente) VALUES (5, 'Centro Sudeste', 5);
 
-INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (1, TO_DATE('10-11-2024', 'DD-MM-YYYY'), TO_DATE('19-11-2024', 'DD-MM-YYYY'), 'SP', 'Em Transporte', 1, 1);
-INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (2, TO_DATE('11-11-2024', 'DD-MM-YYYY'), TO_DATE('20-11-2024', 'DD-MM-YYYY'), 'RJ', 'Pendente', 2, 2);
-INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (3, TO_DATE('12-11-2024', 'DD-MM-YYYY'), TO_DATE('21-11-2024', 'DD-MM-YYYY'), 'MG', 'Pendente', 3, 3);
-INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (4, TO_DATE('13-11-2024', 'DD-MM-YYYY'), TO_DATE('22-11-2024', 'DD-MM-YYYY'), 'BA', 'Em Transporte', 4, 4);
-INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (5, TO_DATE('14-11-2024', 'DD-MM-YYYY'), TO_DATE('18-11-2024', 'DD-MM-YYYY'), 'RS', 'A Caminho', 5, 5);
+INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (1, TO_DATE('10-11-2024', 'DD-MM-YYYY'), TO_DATE('19-11-2024', 'DD-MM-YYYY'), 'São Paulo, SP', 'Em Transporte', 1, 1);
+INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (2, TO_DATE('11-11-2024', 'DD-MM-YYYY'), TO_DATE('20-11-2024', 'DD-MM-YYYY'), 'Niterói, RJ', 'A Caminho', 2, 2);
+INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (3, TO_DATE('12-11-2024', 'DD-MM-YYYY'), TO_DATE('21-11-2024', 'DD-MM-YYYY'), 'Patos de Minas, MG', 'Em Transporte', 3, 3);
+INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (4, TO_DATE('13-11-2024', 'DD-MM-YYYY'), TO_DATE('22-11-2024', 'DD-MM-YYYY'), 'Salvador, BA', 'Em Transporte', 4, 4);
+INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (5, TO_DATE('14-11-2024', 'DD-MM-YYYY'), TO_DATE('18-11-2024', 'DD-MM-YYYY'), 'Gramado, RS', 'A Caminho', 5, 5);
 
 INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (1, 2.5, TO_DATE('06-11-2024', 'DD-MM-YYYY'), 'Frágil', 1, 1, 1);
 INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (2, 1.2, TO_DATE('07-11-2024', 'DD-MM-YYYY'), 'Perecível', 2, 2, 2);
@@ -138,6 +148,57 @@ INSERT INTO entregaFeita (codigoDestinatario, codigoFuncionarioEntrega) VALUES (
 INSERT INTO entregaFeita (codigoDestinatario, codigoFuncionarioEntrega) VALUES (4, 4);
 INSERT INTO entregaFeita (codigoDestinatario, codigoFuncionarioEntrega) VALUES (5, 5);
 
+/* VIEWS */
+
+/* VIEW para visualizar os gerentes e os centros em que eles são responsáveis, fornecendo uma visão clara dos gerentes
+e o setor de logística que estão sob sua responsabilidade, sendo útil para acompanhar suas áreas de atuação*/
+CREATE OR REPLACE VIEW gerentes_responsaveis AS
+SELECT 
+    g.codigo AS codigo_Gerente, p.nome AS nome_Gerente, l.centroDistribuicao  
+FROM gerente g
+JOIN pessoa p ON g.codigo = p.codigo
+JOIN logistica l ON g.codigo = l.codigoGerente;
+
+SELECT * FROM gerentes_responsaveis;
+
+/* VIEW para visualizar as entregas associadas ao destinatario, permite ver facilmente as entregas associadas, 
+promovendo maior clareza sem exibir informações desnecessárias */
+CREATE OR REPLACE VIEW entregas_por_destinatario AS
+SELECT
+    d.codigo AS codigo_Destinatario, p.nome AS nome_Destinatario, e.codigo AS codigo_Entrega,
+    e.dataEnvio AS data_Envio, e.dataEntrega AS data_Entrega, e.status
+FROM destinatario d
+JOIN pessoa p ON d.codigo = p.codigo
+JOIN entregaFeita ef ON d.codigo = ef.codigoDestinatario
+JOIN entrega e ON ef.codigoFuncionarioEntrega = e.codigo;
+
+SELECT * FROM entregas_por_destinatario;
+
+/* VIEW para visualizar as informações de cada entrega, exibe detalhes sobre por onde o pacote está,
+sendo essencial para a logística e gerência, promovendo a supervisão dos pacotes e suas entregas */
+CREATE OR REPLACE VIEW rastrear_entregas AS
+SELECT 
+    p.codigo AS codigo_Pacote, p.peso AS peso_kg, p.dataPostagem AS data_Postagem,
+    p.categoria, e.dataEnvio AS data_Envio, e.dataEntrega AS data_Entrega,
+    e.localizacao, e.status, r.endereco AS endereco_Remetente, d.endereco AS endereco_Destinatario
+FROM pacote p
+JOIN entrega e ON e.codigo = p.codigoEntrega
+JOIN remetente r ON r.codigo = p.codigoRemetente
+JOIN destinatario d ON d.codigo = e.codigo;
+
+SELECT * FROM rastrear_entregas;
+
+/* VIEW para visualizar as entregas e seu funcionário responsável pela entrega, identificando os funcionários e facilitando
+o gerenciamento e promovendo a supervisão pelo setor da logística */
+CREATE OR REPLACE VIEW entregas_por_funcionario AS
+SELECT
+    e.codigo AS codigo_Entrega, e.dataEnvio AS data_Envio, e.dataEntrega AS data_Entrega,
+    e.status, f.nome AS funcionario_Responsavel
+FROM entrega e
+JOIN funcionarioEntrega f ON e.codigo = f.codigoEntrega;
+
+SELECT * FROM entregas_por_funcionario;
+
 /* SELECT para teste */
 
 SELECT * FROM pessoa;
@@ -149,8 +210,6 @@ SELECT * FROM entrega;
 SELECT * FROM pacote;
 SELECT * FROM funcionarioEntrega;
 SELECT * FROM entregaFeita;
-
-
 
 
 
