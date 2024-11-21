@@ -1,5 +1,14 @@
-/* CriaÁ„o das tabelas */
+/* Avalia√ß√£o P1 */
+/* Eduardo Soares de Sousa*/
+/* Vinicius Fazolaro Silva */
 
+/* Descri√ß√£o */
+/* O sistema de correio foi projeto no objetivo de que o remetente possa registrar e enviar pacotes, enquanto o destinat√°rio possa
+visualizar a entrega. A log√≠stica √© formada principalmente pelos entregadore que efetuaram as entregas, tendo a responsabilidade 
+do gerente que podem monitorar os processos da log√≠stica e ainda rastreamento das entregas, isso juntamente com o controle de usuarios
+garante que cada um dos indiv√≠duos tenham seus pap√©is bem definidos, promovendo assim a efeci√™ncia e a integridade do sistema. */
+
+/* Cria√ß√£o das tabelas */
 CREATE TABLE pessoa (
                         codigo NUMBER PRIMARY KEY,
                         nome VARCHAR2(100) NOT NULL,
@@ -73,9 +82,9 @@ CREATE TABLE entregaFeita (
                               CONSTRAINT entregaFeita_funcionarioEntrega_fk FOREIGN KEY (codigoFuncionarioEntrega) REFERENCES funcionarioEntrega (codigo)
 );
 
-/* InserÁ„o de dados */
+/* Inser√ß√£o de dados */
 
-INSERT INTO pessoa (codigo, nome, telefone, email, cpf) VALUES (1, 'Jo„o Silva', '11987654321', 'joao@gmail.com', '12345678901');
+INSERT INTO pessoa (codigo, nome, telefone, email, cpf) VALUES (1, 'Jo√£o Silva', '11987654321', 'joao@gmail.com', '12345678901');
 INSERT INTO pessoa (codigo, nome, telefone, email, cpf) VALUES (2, 'Maria Oliveira', '21987654321', 'maria@gmail.com', '98765432100');
 INSERT INTO pessoa (codigo, nome, telefone, email, cpf) VALUES (3, 'Carlos Souza', '31987654321', 'carlos@gmail.com', '11223344556');
 INSERT INTO pessoa (codigo, nome, telefone, email, cpf) VALUES (4, 'Ana Costa', '41987654321', 'ana@gmail.com', '66778899001');
@@ -83,8 +92,8 @@ INSERT INTO pessoa (codigo, nome, telefone, email, cpf) VALUES (5, 'Paulo Mendes
 
 INSERT INTO remetente (codigo, endereco) VALUES (1, 'Rua das Flores, 123');
 INSERT INTO remetente (codigo, endereco) VALUES (2, 'Avenida Paulista, 1000');
-INSERT INTO remetente (codigo, endereco) VALUES (3, 'Rua do ComÈrcio, 45');
-INSERT INTO remetente (codigo, endereco) VALUES (4, 'PraÁa da SÈ, 50');
+INSERT INTO remetente (codigo, endereco) VALUES (3, 'Rua do Com√©rcio, 45');
+INSERT INTO remetente (codigo, endereco) VALUES (4, 'Pra√ßa da S√©, 50');
 INSERT INTO remetente (codigo, endereco) VALUES (5, 'Alameda Santos, 800');
 
 INSERT INTO gerente (codigo) VALUES (1);
@@ -105,19 +114,19 @@ INSERT INTO logistica (codigo, centroDistribuicao, codigoGerente) VALUES (3, 'Ce
 INSERT INTO logistica (codigo, centroDistribuicao, codigoGerente) VALUES (4, 'Centro Leste', 4);
 INSERT INTO logistica (codigo, centroDistribuicao, codigoGerente) VALUES (5, 'Centro Sudeste', 5);
 
-INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (1, TO_DATE('10-11-2024', 'DD-MM-YYYY'), TO_DATE('19-11-2024', 'DD-MM-YYYY'), 'S„o Paulo, SP', 'Em Transporte', 1, 1);
-INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (2, TO_DATE('11-11-2024', 'DD-MM-YYYY'), TO_DATE('20-11-2024', 'DD-MM-YYYY'), 'NiterÛi, RJ', 'A Caminho', 2, 2);
+INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (1, TO_DATE('10-11-2024', 'DD-MM-YYYY'), TO_DATE('19-11-2024', 'DD-MM-YYYY'), 'S√£o Paulo, SP', 'Em Transporte', 1, 1);
+INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (2, TO_DATE('11-11-2024', 'DD-MM-YYYY'), TO_DATE('20-11-2024', 'DD-MM-YYYY'), 'Niter√≥i, RJ', 'A Caminho', 2, 2);
 INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (3, TO_DATE('12-11-2024', 'DD-MM-YYYY'), TO_DATE('21-11-2024', 'DD-MM-YYYY'), 'Patos de Minas, MG', 'Em Transporte', 3, 3);
 INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (4, TO_DATE('13-11-2024', 'DD-MM-YYYY'), TO_DATE('22-11-2024', 'DD-MM-YYYY'), 'Salvador, BA', 'Em Transporte', 4, 4);
 INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (5, TO_DATE('14-11-2024', 'DD-MM-YYYY'), TO_DATE('18-11-2024', 'DD-MM-YYYY'), 'Gramado, RS', 'A Caminho', 5, 5);
 INSERT INTO entrega (codigo, dataEnvio, dataEntrega, localizacao, status, codigoLogistica, codigoGerente) VALUES (6, TO_DATE('15-11-2024', 'DD-MM-YYYY'), TO_DATE('20-11-2024', 'DD-MM-YYYY'), 'Araraquara, SP', 'Em Transporte', 1, 1);
 
-INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (1, 2.5, TO_DATE('06-11-2024', 'DD-MM-YYYY'), 'Fr·gil', 1, 1, 1);
-INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (2, 1.2, TO_DATE('07-11-2024', 'DD-MM-YYYY'), 'PerecÌvel', 2, 2, 2);
-INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (3, 3.0, TO_DATE('08-11-2024', 'DD-MM-YYYY'), 'EletrÙnicos', 3, 3, 3);
+INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (1, 2.5, TO_DATE('06-11-2024', 'DD-MM-YYYY'), 'Fr√°gil', 1, 1, 1);
+INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (2, 1.2, TO_DATE('07-11-2024', 'DD-MM-YYYY'), 'Perec√≠vel', 2, 2, 2);
+INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (3, 3.0, TO_DATE('08-11-2024', 'DD-MM-YYYY'), 'Eletr√¥nicos', 3, 3, 3);
 INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (4, 4.5, TO_DATE('09-11-2024', 'DD-MM-YYYY'), 'Documentos', 4, 4, 4);
 INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (5, 2.8, TO_DATE('10-11-2024', 'DD-MM-YYYY'), 'Geral', 5, 5, 5);
-INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (6, 3.7, TO_DATE('11-11-2024', 'DD-MM-YYYY'), 'Fr·gil', 5, 5, 6);
+INSERT INTO pacote (codigo, peso, dataPostagem, categoria, codigoRemetente, codigoLogistica, codigoEntrega) VALUES (6, 3.7, TO_DATE('11-11-2024', 'DD-MM-YYYY'), 'Fr√°gil', 5, 5, 6);
 
 
 INSERT INTO funcionarioEntrega (codigo, nome, codigoEntrega) VALUES (1, 'Ricardo Lima', 1);
@@ -138,8 +147,8 @@ INSERT INTO entregaFeita (codigoEntrega, codigoDestinatario, codigoFuncionarioEn
 
 /* VIEWS */
 
-/* VIEW para visualizar os gerentes e os centros em que eles s„o respons·veis, fornecendo uma vis„o clara dos gerentes
-e o setor de logÌstica que est„o sob sua responsabilidade, sendo ˙til para acompanhar suas ·reas de atuaÁ„o*/
+/* VIEW para visualizar os gerentes e os centros em que eles s√£o respons√°veis, fornecendo uma vis√£o clara dos gerentes
+e o setor de log√≠stica que est√£o sob sua responsabilidade, sendo √∫til para acompanhar suas √°reas de atua√ß√£o*/
 CREATE OR REPLACE VIEW gerentes_responsaveis AS
 SELECT
     g.codigo AS codigo_Gerente, p.nome AS nome_Gerente, l.centroDistribuicao
@@ -150,7 +159,7 @@ FROM gerente g
 SELECT * FROM gerentes_responsaveis;
 
 /* VIEW para visualizar as entregas associadas ao destinatario, permite ver facilmente as entregas associadas,
-promovendo maior clareza sem exibir informaÁıes desnecess·rias */
+promovendo maior clareza sem exibir informa√ß√µes desnecess√°rias */
 CREATE OR REPLACE VIEW entregas_por_destinatario AS
 SELECT
     d.codigo AS codigo_Destinatario, p.nome AS nome_Destinatario, e.codigo AS codigo_Entrega,
@@ -162,8 +171,8 @@ FROM destinatario d
 
 SELECT * FROM entregas_por_destinatario;
 
-/* VIEW para visualizar as informaÁıes de cada entrega, exibe detalhes sobre por onde o pacote est·,
-sendo essencial para a logÌstica e gerÍncia, promovendo a supervis„o dos pacotes e suas entregas */
+/* VIEW para visualizar as informa√ß√µes de cada entrega, exibe detalhes sobre por onde o pacote est√°,
+sendo essencial para a log√≠stica e ger√™ncia, promovendo a supervis√£o dos pacotes e suas entregas */
 CREATE OR REPLACE VIEW rastrear_entregas AS
 SELECT
     p.codigo AS codigo_Pacote, p.peso AS peso_kg, p.dataPostagem AS data_Postagem,
@@ -176,8 +185,8 @@ FROM pacote p
 
 SELECT * FROM rastrear_entregas;
 
-/* VIEW para visualizar as entregas e seu funcion·rio respons·vel pela entrega, identificando os funcion·rios e facilitando
-o gerenciamento e promovendo a supervis„o pelo setor da logÌstica */
+/* VIEW para visualizar as entregas e seu funcion√°rio respons√°vel pela entrega, identificando os funcion√°rios e facilitando
+o gerenciamento e promovendo a supervis√£o pelo setor da log√≠stica */
 CREATE OR REPLACE VIEW entregas_por_funcionario AS
 SELECT
     e.codigo AS codigo_Entrega, e.dataEnvio AS data_Envio, e.dataEntrega AS data_Entrega,
@@ -200,8 +209,8 @@ SELECT * FROM funcionarioEntrega;
 SELECT * FROM entregaFeita;
 
 
-/* recupera a quantidade total de entregas realizadas por centro de distribuiÁ„o, ordenando os resultados de forma decrescente pelo total de entregas.
-   È uma consulta complexa por contar a quantidade de entregas por centro de distribuiÁ„o, realizando um join com a tabela entrega para verificar a quantidade, alÈm disso È utilizado o agrupamento por centro. */
+/* recupera a quantidade total de entregas realizadas por centro de distribui√ß√£o, ordenando os resultados de forma decrescente pelo total de entregas.
+   √© uma consulta complexa por contar a quantidade de entregas por centro de distribui√ß√£o, realizando um join com a tabela entrega para verificar a quantidade, al√©m disso √© utilizado o agrupamento por centro. */
 
 select l.centroDistribuicao, count(*) as totalEntregas
 from logistica l
@@ -210,8 +219,8 @@ from logistica l
 group by l.centroDistribuicao
 order by totalEntregas desc;
 
-/* retorna informaÁıes detalhadas sobre uma entrega, incluindo remetente, destinat·rio, entregador e o centro de distribuiÁ„o associado.
-   È uma consulta complexa por possuir multiplas junÁıes entre diferentes tabelas, e cada tabela depende da outra. */
+/* retorna informa√ß√µes detalhadas sobre uma entrega, incluindo remetente, destinat√°rio, entregador e o centro de distribui√ß√£o associado.
+   √© uma consulta complexa por possuir multiplas jun√ß√µes entre diferentes tabelas, e cada tabela depende da outra. */
 
 select e.codigo as codigoEntrega, e.localizacao, e.status,
     pa.codigo as codigoPacote,
@@ -237,8 +246,8 @@ from entrega e
          on fe.codigoEntrega = e.codigo
 order by codigoEntrega asc;
 
-/* exibe detalhes de pacotes, incluindo remetente, centro de distribuiÁ„o e gerente respons·vel.
-   È uma consulta complexa por possuir m˙ltiplas junÁıes entre diferentes tabelas, para recuperar todas as informaÁıes, alÈm disso, ordena os centros por ordem alfabÈtica. */
+/* exibe detalhes de pacotes, incluindo remetente, centro de distribui√ß√£o e gerente respons√°vel.
+   √© uma consulta complexa por possuir m√∫ltiplas jun√ß√µes entre diferentes tabelas, para recuperar todas as informa√ß√µes, al√©m disso, ordena os centros por ordem alfab√©tica. */
 select p.codigo as codigo_pacote, p.peso, p.categoria, p.dataPostagem,
     r.endereco as endereco_remetente,
     l.centroDistribuicao,
@@ -254,16 +263,16 @@ from pacote p
         on g.codigo = pe.codigo
 order by centroDistribuicao asc;
 
-/* calcula o tempo mÈdio de entrega por categoria de pacote.
-   È uma consulta complexa por possuir junÁ„o entre duas tabelas, para que seja calculado a mÈdia de entrega pela categoria do pacote.*/
+/* calcula o tempo m√©dio de entrega por categoria de pacote.
+   √© uma consulta complexa por possuir jun√ß√£o entre duas tabelas, para que seja calculado a m√©dia de entrega pela categoria do pacote.*/
 select p.categoria,
     avg(e.dataEntrega - p.dataPostagem) as tempoMedio
 from pacote p
     inner join entrega e ON p.codigoEntrega = e.codigo
 group by p.categoria;
 
-/* lista remetentes e o n˙mero total de pacotes enviados por eles, ordenando pelos remetentes mais ativos.
-   È uma consulta complexa porque o nome do remetente est· na tabela pessoa, sendo assim È necess·rio percorrer v·rias tabelas atÈ recuperar o nome, alÈm disso È agrupado por remetente */
+/* lista remetentes e o n√∫mero total de pacotes enviados por eles, ordenando pelos remetentes mais ativos.
+   √© uma consulta complexa porque o nome do remetente est√° na tabela pessoa, sendo assim √© necess√°rio percorrer v√°rias tabelas at√© recuperar o nome, al√©m disso √© agrupado por remetente */
 select pe.nome as nomeRemetente,
     count(*) as totalPacotes
 from pacote p
@@ -275,18 +284,18 @@ group by pe.nome
 order by totalPacotes desc;
 
 
-/* a subconsulta È usada dentro da clausula where para retornar todos os pesos de pacotes da categoria 'Fr·gil'
-   para que a consulta principal compare o peso de cada pacote com o pacote mais pesado dos pacotes fr·geis */
+/* a subconsulta √© usada dentro da clausula where para retornar todos os pesos de pacotes da categoria 'Fr√°gil'
+   para que a consulta principal compare o peso de cada pacote com o pacote mais pesado dos pacotes fr√°geis */
 select codigo, peso, categoria
 from pacote
 where peso >= all
     (select peso
     from pacote
-    where categoria = 'Fr·gil')
-and categoria <> 'Fr·gil';
+    where categoria = 'Fr√°gil')
+and categoria <> 'Fr√°gil';
 
-/*  a subconsulta busca o codigoGerente na tabela logistica onde o centroDistribuicao È 'Centro Norte'
-    a consulta principal filtra as entregas com base nesse cÛdigo do gerente. */
+/*  a subconsulta busca o codigoGerente na tabela logistica onde o centroDistribuicao √© 'Centro Norte'
+    a consulta principal filtra as entregas com base nesse c√≥digo do gerente. */
 select e.codigo, e.dataEnvio, e.dataEntrega, e.localizacao, e.status
 from entrega e
 where e.codigoGerente =
@@ -294,9 +303,9 @@ where e.codigoGerente =
     from logistica l
     where l.centroDistribuicao = 'Centro Norte');
 
-/* aqui s„o utilizadas duas subconsultas:
-   a primeira subconsulta retorna os cÛdigos dos destinat·rios de entregas feitas por um funcion·rio cujo cÛdigo de entrega È diferente de 'Fernanda Alves'.
-   a segunda subconsulta verifica o cÛdigo do funcion·rio que tem o nome 'Fernanda Alves' */
+/* aqui s√£o utilizadas duas subconsultas:
+   a primeira subconsulta retorna os c√≥digos dos destinat√°rios de entregas feitas por um funcion√°rio cujo c√≥digo de entrega √© diferente de 'Fernanda Alves'.
+   a segunda subconsulta verifica o c√≥digo do funcion√°rio que tem o nome 'Fernanda Alves' */
 select d.codigo, d.endereco
 from destinatario d
 where d.codigo in
